@@ -2,7 +2,7 @@
   "name": "ts3-versions-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
