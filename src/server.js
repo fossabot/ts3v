@@ -6,8 +6,7 @@ app.get("/", async (_, res, next) => {
     const versions = await getVersions();
     res.json({ latest: versions[0], versions });
   } catch (err) {
-    console.log(err);
-    next();
+    next(err);
   }
 });
 
@@ -16,12 +15,12 @@ app.get("/latest", async (_, res, next) => {
     const versions = await getVersions();
     res.type("text").send(versions[0]);
   } catch (err) {
-    console.error(err);
-    next();
+    next(err);
   }
 });
 
-app.use((_, res) => {
+app.use((_, res, err) => {
+  console.error(err);
   res.status(500).json({ error: "Unknown error" });
 });
 
