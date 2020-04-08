@@ -1,6 +1,11 @@
 const app = require("express")();
 const getVersions = require("./versions");
 
+app.use((_, res, next) => {
+  res.set('Cache-Control', 's-maxage=1800, stale-while-revalidate');
+  next();
+});
+
 app.get("/", async (_, res, next) => {
   try {
     const versions = await getVersions();
@@ -19,7 +24,7 @@ app.get("/latest", async (_, res, next) => {
   }
 });
 
-app.use((_, res, err) => {
+app.use((_, res, __, err) => {
   console.error(err);
   res.status(500).json({ error: "Unknown error" });
 });
